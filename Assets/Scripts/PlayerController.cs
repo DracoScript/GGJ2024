@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float jumpForce = 5.0f;
 
+    private CustomInput customInput;
     private Rigidbody2D rb;
     private float horizontal = 0;
     private float vertical = 0;
@@ -21,13 +22,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        customInput = new CustomInput();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw(inputHorizontal);
-        //vertical = Input.GetAxisRaw(inputVertical);
+        //horizontal = Input.GetAxisRaw(inputHorizontal);
+        horizontal = customInput.Player.Move.ReadValue<Vector2>().x;
 
         // Apply walk
         rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -60,13 +62,18 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, vertical * jumpForce);
     }
 
-    public void Jump(InputAction.CallbackContext context) {
-        if(context.performed) {
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
             vertical = 1;
-        }
 
-        if(context.canceled) {
+        if (context.canceled)
             vertical = 0;
-        }
+    }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            Debug.Log(name + ": Attack!");
     }
 }
