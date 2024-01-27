@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw(inputHorizontal);
-        vertical = Input.GetAxisRaw(inputVertical);
+        //vertical = Input.GetAxisRaw(inputVertical);
 
         // Apply walk
         rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -57,5 +58,15 @@ public class PlayerController : MonoBehaviour
         // Apply jump
         if (vertical > 0)
             rb.velocity = new Vector2(rb.velocity.x, vertical * jumpForce);
+    }
+
+    public void Jump(InputAction.CallbackContext context) {
+        if(context.performed) {
+            vertical = 1;
+        }
+
+        if(context.canceled) {
+            vertical = 0;
+        }
     }
 }
