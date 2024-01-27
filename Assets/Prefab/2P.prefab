@@ -156,7 +156,7 @@ MonoBehaviour:
   animator: {fileID: 298643978}
   sprite: {fileID: 7860798365229974118}
   teamNumber: 0
-  name: main
+  playerName: main
 --- !u!114 &7860798365229974114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +452,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   sprite: {fileID: 0}
   teamNumber: 0
-  name: copy
+  playerName: copy
 --- !u!114 &7860798366166938376
 MonoBehaviour:
   m_ObjectHideFlags: 0

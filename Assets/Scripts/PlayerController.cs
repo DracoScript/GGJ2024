@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("Point System")]
     public int teamNumber = 0;
 
-    public string name;
+    public string playerName;
     private Rigidbody2D rb;
     private BoxCollider2D col;
     private float horizontal = 0;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<BoxCollider2D>();
 
         if(GameController.instance != null)
-            GameController.instance.NewPlayer(name, this.gameObject);
+            GameController.instance.NewPlayer(playerName, this.gameObject);
     }
 
     void Update()
