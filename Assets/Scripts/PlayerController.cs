@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,19 +9,17 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float jumpForce = 5.0f;
 
-    private Animator animator;
-    private SpriteRenderer sprite;
-
-    [Header("Point System")]
-    public int teamNumber = 0;
-
     [Header("Active")]
     public bool isActive = true;
     public bool isReady = false;
 
+    [HideInInspector]
     public string playerName;
+    [HideInInspector]
+    public int id = -1;
 
-    private int id = -1;
+    private Animator animator;
+    private SpriteRenderer sprite;
     private Rigidbody2D rb;
     private float horizontal = 0;
     private float speed = 0;
@@ -34,8 +31,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
 
-        if (GameController.instance != null)
-            GameController.instance.NewPlayer(playerName, this.gameObject);
+        if (GameController.Instance != null)
+            GameController.Instance.NewPlayer(playerName, gameObject);
     }
 
     void Update()
@@ -48,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isActive)
+        if (isActive && !isReady)
         {
             animator.SetBool("isSleeping", false);
             rb.gravityScale = 1;
@@ -97,13 +94,13 @@ public class PlayerController : MonoBehaviour
 
     public void SetReady()
     {
-        id = GameState.Instance.playerStats.Count;
-        GameState.Instance.playerStats.Add(new PlayerStat(gameObject));
+        isReady = true;
+        rb.velocity *= 0;
     }
 
     public void ClearReady()
     {
-
+        isReady = false;
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -114,7 +111,7 @@ public class PlayerController : MonoBehaviour
             onFloor = false;
 
             animator.SetBool("isJumping", !onFloor);
-                
+
         }
     }
 
@@ -137,15 +134,11 @@ public class PlayerController : MonoBehaviour
 
         if (isReady)
             ClearReady();
-
-        GameState.Instance.playerStats[id].IsConnected = false;
     }
 
     public void OnReconnect()
     {
         Debug.Log(transform.parent.name + " has reconnected");
-
-        GameState.Instance.playerStats[id].IsConnected = true;
     }
 
     public void StartPointIncrease()
@@ -164,10 +157,8 @@ public class PlayerController : MonoBehaviour
         {
             if (id < 0)
                 Debug.LogError("Player precisa de um id setado pra incrementar seus pontos.");
-            else if (id >= GameState.Instance.playerStats.Count)
-                Debug.LogError("Id de player fora do range do GameState.playerStats.");
             else
-                GameState.Instance.playerStats[id].Points++;
+                GameController.Instance.points[id]++;
 
             yield return new WaitForSeconds(1);
         }

@@ -8,10 +8,10 @@ public class GameCanvasController : MonoBehaviour
 
     void Update()
     {
-        for (var i = 0; i < GameState.Instance.playerStats.Count; i++)
+        for (var i = 0; i < GameController.Instance.points.Count; i++)
         {
             if (points.Count > i)
-                points[i].text = GameState.Instance.playerStats[i].Points.ToString("000000");
+                points[i].text = GameController.Instance.points[i].ToString("000000");
         }
     }
 }
