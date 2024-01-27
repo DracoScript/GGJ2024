@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,9 +21,14 @@ public class PlayerController : MonoBehaviour
     [Header("Point System")]
     public int teamNumber = 0;
 
+    [Header("Active")]
+    public bool isActive = true;
+    public bool isReady = false;
+
     public string playerName;
+
+    private int id = -1;
     private Rigidbody2D rb;
-    private BoxCollider2D col;
     private float horizontal = 0;
     private float vertical = 0;
     private float speed = 0;
@@ -31,16 +37,16 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<BoxCollider2D>();
 
-        if(GameController.instance != null)
+        if (GameController.instance != null)
             GameController.instance.NewPlayer(playerName, this.gameObject);
     }
 
     void Update()
     {
         // Apply walk
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        if (isActive && !isReady)
+            rb.velocity = new Vector2(speed, rb.velocity.y);
 
         // Detect floor
         onFloor = Mathf.Abs(rb.velocity.y) < 0.5;
@@ -82,12 +88,28 @@ public class PlayerController : MonoBehaviour
             speed = 0;
 
             if (animator)
-                animator.SetBool("isWalking", false);
+            {
+                if (isActive)
+                    animator.SetBool("isWalking", false);
+                else
+                    animator.SetBool("isSleeping", false);
+            }
         }
 
         // Apply jump
-        if (vertical > 0)
+        if (vertical > 0 && isActive && !isReady)
             rb.velocity = new Vector2(rb.velocity.x, vertical * jumpForce);
+    }
+
+    public void SetReady()
+    {
+        id = GameState.Instance.playerStats.Count;
+        GameState.Instance.playerStats.Add(new PlayerStat(gameObject));
+    }
+
+    public void ClearReady()
+    {
+
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -103,10 +125,10 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            if (animator)
+            if (isReady)
+                ClearReady();
+            else if (animator && isActive)
                 animator.SetTrigger("Attack");
-            else
-                Debug.Log(name + ": Attack!");
         }
     }
 
@@ -115,11 +137,18 @@ public class PlayerController : MonoBehaviour
     public void OnDisconnect()
     {
         Debug.Log(transform.parent.name + " has disconnected");
+
+        if (isReady)
+            ClearReady();
+
+        GameState.Instance.playerStats[id].IsConnected = false;
     }
 
     public void OnReconnect()
     {
         Debug.Log(transform.parent.name + " has reconnected");
+
+        GameState.Instance.playerStats[id].IsConnected = true;
     }
 
     public void StartPointIncrease()
@@ -136,7 +165,13 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            GameState.Instance.teamPoints[0]++;
+            if (id < 0)
+                Debug.LogError("Player precisa de um id setado pra incrementar seus pontos.");
+            else if (id >= GameState.Instance.playerStats.Count)
+                Debug.LogError("Id de player fora do range do GameState.playerStats.");
+            else
+                GameState.Instance.playerStats[id].Points++;
+
             yield return new WaitForSeconds(1);
         }
     }

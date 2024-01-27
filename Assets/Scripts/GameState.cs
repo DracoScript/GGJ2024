@@ -1,7 +1,11 @@
+using Assets.Scripts;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
+    public List<PlayerStat> playerStats;
+
     // Singleton
     public static GameState Instance { get; private set; }
     private void Awake()
@@ -11,15 +15,31 @@ public class GameState : MonoBehaviour
         else
             Instance = this;
 
+        playerStats = new List<PlayerStat>();
+
         DontDestroyOnLoad(gameObject);
     }
 
-    // Content
-
-    public int[] teamPoints;
-
-    public void InitiateState(int teamCount)
+    public void CheckReady()
     {
-        teamPoints = new int[teamCount];
+        foreach (PlayerStat stat in playerStats)
+        {
+            if (!stat.Object.GetComponent<PlayerController>()?.isReady ?? false)
+            {
+                Debug.Log(stat.Object.name + " is not ready");
+                return;
+            }
+        }
+
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        foreach (PlayerStat stat in playerStats)
+        {
+            stat.Points = 0;
+            // TODO: Ajustar a posição do player com stat.Object.transform 
+        }
     }
 }
