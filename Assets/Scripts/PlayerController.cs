@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private CustomInput customInput;
     private Rigidbody2D rb;
+    private Vector2 moveInput;
     private float horizontal = 0;
     private float vertical = 0;
     private float speed = 0;
@@ -28,9 +29,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //horizontal = Input.GetAxisRaw(inputHorizontal);
-        horizontal = customInput.Player.Move.ReadValue<Vector2>().x;
-
         // Apply walk
         rb.velocity = new Vector2(speed, rb.velocity.y);
     }
@@ -76,4 +74,6 @@ public class PlayerController : MonoBehaviour
         if (context.started)
             Debug.Log(name + ": Attack!");
     }
+
+    public void OnMove(InputAction.CallbackContext context) => horizontal = context.ReadValue<Vector2>().x;
 }
