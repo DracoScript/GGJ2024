@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isActive)
         {
+            animator.SetBool("isSleeping", false);
             rb.gravityScale = 1;
 
             // Walk right
@@ -61,8 +62,8 @@ public class PlayerController : MonoBehaviour
 
                 if (sprite)
                     sprite.flipX = false;
-                if (animator)
-                    animator.SetBool("isWalking", true);
+
+                animator.SetBool("isWalking", true);
             }
             // Walk left
             else if (horizontal < 0)
@@ -73,16 +74,15 @@ public class PlayerController : MonoBehaviour
 
                 if (sprite)
                     sprite.flipX = true;
-                if (animator)
-                    animator.SetBool("isWalking", true);
+
+                animator.SetBool("isWalking", true);
             }
             // Walk stop
             else
             {
                 speed = 0;
 
-                if (animator)
-                    animator.SetBool("isWalking", false);
+                animator.SetBool("isWalking", false);
             }
         }
         else
@@ -91,8 +91,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector2.zero;
             speed = 0;
 
-            if (animator)
-                animator.SetBool("isSleeping", true);
+            animator.SetBool("isSleeping", true);
         }
     }
 
@@ -114,8 +113,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             onFloor = false;
 
-            if (animator)
-                animator.SetBool("isJumping", !onFloor);
+            animator.SetBool("isJumping", !onFloor);
                 
         }
     }
@@ -126,7 +124,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isReady)
                 ClearReady();
-            else if (animator && isActive)
+            else if (isActive)
                 animator.SetTrigger("Attack");
         }
     }
@@ -181,8 +179,7 @@ public class PlayerController : MonoBehaviour
         {
             onFloor = true;
 
-            if (animator)
-                animator.SetBool("isJumping", !onFloor);
+            animator.SetBool("isJumping", !onFloor);
         }
     }
 }
