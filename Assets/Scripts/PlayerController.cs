@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Input")]
+    public string inputHorizontal = "Horizontal";
+    public string inputVertical = "Vertical";
+
+    [Header("Movement")]
     public float accel = 10.0f;
     public float maxSpeed = 10.0f;
     public float jumpForce = 5.0f;
@@ -20,8 +25,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw(inputHorizontal);
+        vertical = Input.GetAxisRaw(inputVertical);
 
         // Apply walk
         rb.velocity = new Vector2(speed, rb.velocity.y);
