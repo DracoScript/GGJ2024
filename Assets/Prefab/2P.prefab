@@ -221,7 +221,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7860798365229974117}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Jump
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -237,7 +237,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7860798365229974117}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Attack
+        m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -451,7 +451,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7860798366166938380}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Jump
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -467,7 +467,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7860798366166938380}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Attack
+        m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
