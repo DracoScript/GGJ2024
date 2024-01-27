@@ -166,11 +166,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Floor"))
-        {
-            onFloor = true;
+        onFloor = true;
 
-            animator.SetBool("isJumping", !onFloor);
-        }
+        animator.SetBool("isJumping", !onFloor);
     }
 }
