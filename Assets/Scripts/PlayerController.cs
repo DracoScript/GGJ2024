@@ -5,18 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Input")]
-    public string inputHorizontal = "Horizontal";
-    public string inputVertical = "Vertical";
-
     [Header("Movement")]
     public float accel = 10.0f;
     public float maxSpeed = 10.0f;
     public float jumpForce = 5.0f;
 
-    [Header("Sprite")]
-    public Animator animator;
-    public SpriteRenderer sprite;
+    private Animator animator;
+    private SpriteRenderer sprite;
 
     [Header("Point System")]
     public int teamNumber = 0;
@@ -30,13 +25,14 @@ public class PlayerController : MonoBehaviour
     private int id = -1;
     private Rigidbody2D rb;
     private float horizontal = 0;
-    private float vertical = 0;
     private float speed = 0;
     private bool onFloor = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
 
         if (GameController.instance != null)
             GameController.instance.NewPlayer(playerName, this.gameObject);
@@ -48,57 +44,56 @@ public class PlayerController : MonoBehaviour
         if (isActive && !isReady)
             rb.velocity = new Vector2(speed, rb.velocity.y);
 
-        // Detect floor
-        onFloor = Mathf.Abs(rb.velocity.y) < 0.5;
-
-        // Jump animation
-        if (animator)
-            animator.SetBool("isJumping", !onFloor);
     }
 
     void FixedUpdate()
     {
-        // Walk right
-        if (horizontal > 0)
+        if (isActive)
         {
-            speed += accel;
-            if (speed > maxSpeed)
-                speed = maxSpeed;
+            rb.gravityScale = 1;
 
-            if (sprite)
-                sprite.flipX = false;
-            if (animator)
-                animator.SetBool("isWalking", true);
-        }
-        // Walk left
-        else if (horizontal < 0)
-        {
-            speed -= accel;
-            if (speed < -maxSpeed)
-                speed = -maxSpeed;
+            // Walk right
+            if (horizontal > 0)
+            {
+                speed += accel;
+                if (speed > maxSpeed)
+                    speed = maxSpeed;
 
-            if (sprite)
-                sprite.flipX = true;
-            if (animator)
-                animator.SetBool("isWalking", true);
+                if (sprite)
+                    sprite.flipX = false;
+                if (animator)
+                    animator.SetBool("isWalking", true);
+            }
+            // Walk left
+            else if (horizontal < 0)
+            {
+                speed -= accel;
+                if (speed < -maxSpeed)
+                    speed = -maxSpeed;
+
+                if (sprite)
+                    sprite.flipX = true;
+                if (animator)
+                    animator.SetBool("isWalking", true);
+            }
+            // Walk stop
+            else
+            {
+                speed = 0;
+
+                if (animator)
+                    animator.SetBool("isWalking", false);
+            }
         }
-        // Walk stop
         else
         {
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
             speed = 0;
 
             if (animator)
-            {
-                if (isActive)
-                    animator.SetBool("isWalking", false);
-                else
-                    animator.SetBool("isSleeping", false);
-            }
+                animator.SetBool("isSleeping", true);
         }
-
-        // Apply jump
-        if (vertical > 0 && isActive && !isReady)
-            rb.velocity = new Vector2(rb.velocity.x, vertical * jumpForce);
     }
 
     public void SetReady()
@@ -114,11 +109,15 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            vertical = 1;
+        if (onFloor && context.performed && isActive && !isReady)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            onFloor = false;
 
-        if (context.canceled)
-            vertical = 0;
+            if (animator)
+                animator.SetBool("isJumping", !onFloor);
+                
+        }
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -173,6 +172,17 @@ public class PlayerController : MonoBehaviour
                 GameState.Instance.playerStats[id].Points++;
 
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Floor"))
+        {
+            onFloor = true;
+
+            if (animator)
+                animator.SetBool("isJumping", !onFloor);
         }
     }
 }

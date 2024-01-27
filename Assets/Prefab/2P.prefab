@@ -148,14 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b923fc5fe0b204994173ded02955c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHorizontal: Horizontal
-  inputVertical: Vertical
   accel: 5
   maxSpeed: 5
-  jumpForce: 3
-  animator: {fileID: 298643978}
-  sprite: {fileID: 7860798365229974118}
+  jumpForce: 6
   teamNumber: 0
+  isActive: 1
+  isReady: 0
   playerName: main
 --- !u!114 &7860798365229974114
 MonoBehaviour:
@@ -444,14 +442,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b923fc5fe0b204994173ded02955c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHorizontal: Horizontal
-  inputVertical: Vertical
   accel: 3
   maxSpeed: 3
   jumpForce: 6
-  animator: {fileID: 0}
-  sprite: {fileID: 0}
   teamNumber: 0
+  isActive: 1
+  isReady: 0
   playerName: copy
 --- !u!114 &7860798366166938376
 MonoBehaviour:
