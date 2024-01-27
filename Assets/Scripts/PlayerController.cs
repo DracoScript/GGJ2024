@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [Header("Sprite")]
     public Animator animator;
     public SpriteRenderer sprite;
+
+    [Header("Point System")]
+    public int teamNumber = 0;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -112,5 +116,24 @@ public class PlayerController : MonoBehaviour
     public void OnReconnect()
     {
         Debug.Log(transform.parent.name + " has reconnected");
+    }
+
+    public void StartPointIncrease()
+    {
+        StartCoroutine("PointIncrease");
+    }
+
+    public void StopPointIncrease()
+    {
+        StopCoroutine("PointIncrease");
+    }
+
+    private IEnumerator PointIncrease()
+    {
+        while (true)
+        {
+            GameState.Instance.teamPoints[0]++;
+            yield return new WaitForSeconds(1);
+        }
     }
 }
