@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, vertical * jumpForce);
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
         if (context.performed)
             vertical = 1;
@@ -69,11 +69,21 @@ public class PlayerController : MonoBehaviour
             vertical = 0;
     }
 
-    public void Attack(InputAction.CallbackContext context)
+    public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
             Debug.Log(name + ": Attack!");
     }
 
     public void OnMove(InputAction.CallbackContext context) => horizontal = context.ReadValue<Vector2>().x;
+
+    public void OnDisconnect()
+    {
+        Debug.Log(transform.parent.name + " has disconnected");
+    }
+
+    public void OnReconnect()
+    {
+        Debug.Log(transform.parent.name + " has reconnected");
+    }
 }
