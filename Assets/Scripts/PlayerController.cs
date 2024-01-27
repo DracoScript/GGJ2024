@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
 
-        GameController.instance.NewPlayer(name, this.gameObject);
+        if(GameController.instance != null)
+            GameController.instance.NewPlayer(name, this.gameObject);
     }
 
     void Update()
