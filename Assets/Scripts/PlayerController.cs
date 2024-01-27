@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("Point System")]
     public int teamNumber = 0;
 
+    public string name;
     private Rigidbody2D rb;
     private BoxCollider2D col;
     private float horizontal = 0;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+
+        GameController.instance.NewPlayer(name, this.gameObject);
     }
 
     void Update()
