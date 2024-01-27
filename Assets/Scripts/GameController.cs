@@ -15,10 +15,10 @@ public class GameController : MonoBehaviour {
     public void NewPlayer(string playerName, GameObject player) {
         if(playerName == "main") {
             player.transform.position = pos1[qtdPlayers].position;
-            qtdPlayers++;
         }
         else {
             player.transform.position = pos2[qtdPlayers].position;
+            qtdPlayers++;
         }
     }
 }

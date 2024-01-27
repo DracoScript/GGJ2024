@@ -133,6 +133,17 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""028b15a2-e7dd-4c5c-b6dd-a3ba020af7eb"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8f37d0b7-e010-48b6-b979-04217ac47551"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -155,6 +166,17 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f93c49a9-4c89-4cff-a743-2e993a0207e5"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6a772e8b-4c38-41e5-a7a0-12fe73a8ff97"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -168,6 +190,17 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""5c8ecbe8-89d8-4f1a-ab8d-569b18229af9"",
                     ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e453c75-3baa-4b08-b716-068205823f8f"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -234,6 +267,39 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""name"": ""positive"",
                     ""id"": ""a554fcbb-f45e-484d-8625-1941e923f035"",
                     ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""861a66b0-49af-456f-ae90-92778b3a4e89"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""cdd3463f-480a-4a30-a71b-58bef3b551d9"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""174d41b2-ddcd-4a01-9abd-535dc35159e5"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
