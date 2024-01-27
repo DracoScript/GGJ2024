@@ -12,25 +12,34 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float jumpForce = 5.0f;
 
-    private CustomInput customInput;
+    [Header("Sprite")]
+    public Animator animator;
+    public SpriteRenderer sprite;
+
     private Rigidbody2D rb;
-    private Vector2 moveInput;
+    private BoxCollider2D col;
     private float horizontal = 0;
     private float vertical = 0;
     private float speed = 0;
+    private bool onFloor = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        customInput = new CustomInput();
+        col = GetComponent<BoxCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Apply walk
         rb.velocity = new Vector2(speed, rb.velocity.y);
+
+        // Detect floor
+        onFloor = Mathf.Abs(rb.velocity.y) < 0.5;
+
+        // Jump animation
+        if (animator)
+            animator.SetBool("isJumping", !onFloor);
     }
 
     void FixedUpdate()
@@ -41,6 +50,11 @@ public class PlayerController : MonoBehaviour
             speed += accel;
             if (speed > maxSpeed)
                 speed = maxSpeed;
+
+            if (sprite)
+                sprite.flipX = false;
+            if (animator)
+                animator.SetBool("isWalking", true);
         }
         // Walk left
         else if (horizontal < 0)
@@ -48,11 +62,19 @@ public class PlayerController : MonoBehaviour
             speed -= accel;
             if (speed < -maxSpeed)
                 speed = -maxSpeed;
+
+            if (sprite)
+                sprite.flipX = true;
+            if (animator)
+                animator.SetBool("isWalking", true);
         }
         // Walk stop
         else
         {
             speed = 0;
+
+            if (animator)
+                animator.SetBool("isWalking", false);
         }
 
         // Apply jump
@@ -72,7 +94,12 @@ public class PlayerController : MonoBehaviour
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
-            Debug.Log(name + ": Attack!");
+        {
+            if (animator)
+                animator.SetTrigger("Attack");
+            else
+                Debug.Log(name + ": Attack!");
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context) => horizontal = context.ReadValue<Vector2>().x;
