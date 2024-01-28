@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     [Header("Other Configs")]
     public List<GameObject> games;
     public List<PlayerReadyZone> zones;
+    public GameObject tutorial;
+    public GameObject tutorialText;
 
     [Header("Time")]
     public GameObject timerObject;
@@ -39,6 +41,8 @@ public class GameController : MonoBehaviour
     private bool timerIsRunning = false;
     private GameObject game1;
     private GameObject game2;
+
+    private bool tutorialool = false;
 
     // Singleton
     public static GameController Instance { get; private set; }
@@ -129,6 +133,8 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        tutorial.SetActive(false);
+        tutorialText.SetActive(false);
         if (games.Count < 2)
             Debug.LogError("Precisa configurar pelo menos 2 games no GameController.");
 
@@ -288,16 +294,31 @@ public class GameController : MonoBehaviour
 
     public void CloseEndCanvas()
     {
-        // Destroy resultados
-        for (int i = gridWinner.transform.childCount - 1; i >= 0; i--)
+        
+        if (endCanvas.activeSelf)
         {
-            DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
-        }
-        for (int i = gridLosers.transform.childCount - 1; i >= 0; i--)
-        {
-            DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
-        }
+            // Destroy resultados
+            for (int i = gridWinner.transform.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
+            }
+            for (int i = gridLosers.transform.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
+            }
 
-        endCanvas.SetActive(false);
+            endCanvas.SetActive(false);
+            tutorialText.SetActive(true);
+
+        }
+        else if (lobbyCamera.activeSelf)
+        {
+            if (tutorialool)
+                tutorial.SetActive(false);
+            else
+                tutorial.SetActive(true);
+
+            tutorialool = !tutorialool;
+        }
     }
 }

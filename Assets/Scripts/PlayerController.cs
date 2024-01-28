@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnStart(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && playerName == "main")
             GameController.Instance.CloseEndCanvas();
     }
 
