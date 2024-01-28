@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
@@ -26,8 +25,12 @@ public class GameController : MonoBehaviour
 
     [Header("Time")]
     public TMP_Text timeTxt;
-    public float timeRemaining; //Reinicia tempo
+    public float gameTime = 120;
+
+    private float timeRemaining; //Reinicia tempo
     private bool timerIsRunning = false;
+    private GameObject game1;
+    private GameObject game2;
 
     // Singleton
     public static GameController Instance { get; private set; }
@@ -38,34 +41,38 @@ public class GameController : MonoBehaviour
         else
             Instance = this;
 
+        timeRemaining = gameTime;
+
         DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-        if(timerIsRunning) {
+        if (timerIsRunning)
+        {
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
 
-                if(timeRemaining < 0)
+                if (timeRemaining < 0)
                     timeRemaining = 0;
 
                 DisplayTime(timeRemaining);
             }
             else
             {
-                timeRemaining = 0;
+                timeRemaining = gameTime;
                 DisplayTime(timeRemaining);
                 timerIsRunning = false;
                 Debug.Log("Time has run out!");
+                EndGame();
             }
         }
     }
 
     void DisplayTime(float timeToDisplay)
     {
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timeTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
@@ -98,8 +105,8 @@ public class GameController : MonoBehaviour
 
     public void CheckReady()
     {
-        if (mainPlayers.Count < 2)
-            return;
+        //if (mainPlayers.Count < 2)
+        //    return;
 
         foreach (GameObject player in mainPlayers)
         {
@@ -119,8 +126,8 @@ public class GameController : MonoBehaviour
 
         // Random Games
         games = games.OrderBy(item => Random.value).ToList();
-        GameObject game1 = games[0];
-        GameObject game2 = games[1];
+        game1 = games[0];
+        game2 = games[1];
 
         // Ajusta as cameras para a posi��o dos games escolhidos
         game1Camera.transform.position = game1.transform.position;
@@ -170,6 +177,12 @@ public class GameController : MonoBehaviour
             }
         }
 
+        // Iniciar spawn de moedas
+        if (game1.TryGetComponent(out CoinsSpawner spawner1))
+            spawner1.enabled = true;
+        if (game2.TryGetComponent(out CoinsSpawner spawner2))
+            spawner2.enabled = true;
+
         // TODO: Esconder/Mostrar canvas?
 
         game1Camera.SetActive(true);
@@ -179,6 +192,18 @@ public class GameController : MonoBehaviour
 
     public void EndGame()
     {
+        // Encerra spawn de moedas
+        if (game1.TryGetComponent(out CoinsSpawner spawner1))
+        {
+            spawner1.ClearCoins();
+            spawner1.enabled = true;
+        }
+        if (game2.TryGetComponent(out CoinsSpawner spawner2))
+        {
+            spawner2.ClearCoins();
+            spawner2.enabled = true;
+        }
+
         // Movendo os players para o Lobby
         for (int i = 0; i < mainPlayers.Count; i++)
         {

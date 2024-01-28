@@ -4,15 +4,91 @@ using UnityEngine;
 
 public class CoinsSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject coinPrefab;
+    public Transform spawnSpot;
+    public int maxCoins = 3;
+
+    private List<Transform> spots = new();
+    private List<GameObject> coins = new();
+
     void Start()
     {
-        
+        if (!coinPrefab)
+            Debug.LogError("Precisa adicionar o prefab da moeda!");
+        else
+        {
+            // Pega spots
+            for (int i = 0; i < spawnSpot.childCount; i++)
+                spots.Add(spawnSpot.GetChild(i));
+
+            StartCoroutine("TimedSpawn");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator TimedSpawn()
     {
-        
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
+
+            while (coins.Count < spots.Count)
+            {
+                // Procura uma posição não usada
+                bool found = true;
+                Vector3 pos = spots[Random.Range(0, spots.Count)].position;
+                RemovingDeletedCoins();
+                foreach (GameObject coin in coins)
+                {
+                    if (pos == coin.transform.position)
+                    {
+                        found = false;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    // Create
+                    GameObject newCoin = Instantiate(coinPrefab);
+                    newCoin.transform.position = pos;
+                    coins.Add(newCoin);
+
+                    break;
+                }
+            }
+
+            // Removendo moedas deletadas
+            RemovingDeletedCoins();
+
+            // Wait collect
+            while (coins.Count >= maxCoins)
+            {
+                yield return new WaitForSeconds(0.1f);
+                RemovingDeletedCoins();
+            }
+        }
+    }
+
+    private void RemovingDeletedCoins()
+    {
+        foreach (GameObject coin in coins)
+        {
+            if (coin == null)
+            {
+                coins.Remove(coin);
+                break;
+            }
+        }
+    }
+
+    public void ClearCoins()
+    {
+        foreach (GameObject coin in coins)
+        {
+            if (coin != null)
+                DestroyImmediate(coin);
+        }
+
+        coins = new();
     }
 }
