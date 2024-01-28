@@ -23,6 +23,12 @@ public class PlayerController : MonoBehaviour
     public float deceleration = 0.2f;
     public GameObject collDefault, collSleep;
 
+    [Header("Sounds")]
+    public AudioClip AttackClip;
+    public AudioClip JumpClip;
+    public AudioClip HitClip;
+    private AudioSource audioSource;
+
     [HideInInspector]
     public string playerName;
     [HideInInspector]
@@ -43,6 +49,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         originalSpriteColor = sprite.color;
 
@@ -169,6 +176,7 @@ public class PlayerController : MonoBehaviour
 
         if (onFloor && context.performed && isActive && !isReady)
         {
+            audioSource.PlayOneShot(JumpClip);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             onFloor = false;
 
@@ -256,6 +264,7 @@ public class PlayerController : MonoBehaviour
         else
             direction = -1f;
 
+        audioSource.PlayOneShot(HitClip);
         if (isActive)
         {
             rb.AddForce(new Vector2(direction / 3f, 0.3f) * knockbackForce, ForceMode2D.Impulse);
@@ -274,6 +283,7 @@ public class PlayerController : MonoBehaviour
     {
         sword.SetActive(true);
         attackAllow = false;
+        audioSource.PlayOneShot(AttackClip);
         yield return new WaitForSeconds(0.01f);
         sword.transform.Translate(Vector3.forward * 0.01f);
         yield return new WaitForSeconds(0.3f);
