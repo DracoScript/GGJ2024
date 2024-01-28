@@ -17,8 +17,8 @@ public class PairController : MonoBehaviour
         leftPlayerController = leftPlayer.GetComponent<PlayerController>();
         rightPlayerController = rightPlayer.GetComponent<PlayerController>();
 
-        leftPlayerController.isActive = true;
-        rightPlayerController.isActive = false;
+        leftPlayerController.isActive = false;
+        rightPlayerController.isActive = true;
     }
 
     public void OnChangeGame(InputAction.CallbackContext context)
