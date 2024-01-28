@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -22,6 +24,11 @@ public class GameController : MonoBehaviour
     public List<GameObject> games;
     public List<PlayerReadyZone> zones;
 
+    [Header("Time")]
+    public TMP_Text timeTxt;
+    public float timeRemaining; //Reinicia tempo
+    private bool timerIsRunning = false;
+
     // Singleton
     public static GameController Instance { get; private set; }
     private void Awake()
@@ -32,6 +39,35 @@ public class GameController : MonoBehaviour
             Instance = this;
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Update()
+    {
+        if(timerIsRunning) {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+
+                if(timeRemaining < 0)
+                    timeRemaining = 0;
+
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                timeRemaining = 0;
+                DisplayTime(timeRemaining);
+                timerIsRunning = false;
+                Debug.Log("Time has run out!");
+            }
+        }
+    }
+
+    void DisplayTime(float timeToDisplay)
+    {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timeTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void NewPlayer(string playerName, GameObject player)
@@ -79,12 +115,14 @@ public class GameController : MonoBehaviour
         if (games.Count < 2)
             Debug.LogError("Precisa configurar pelo menos 2 games no GameController.");
 
+        timerIsRunning = true;
+
         // Random Games
         games = games.OrderBy(item => Random.value).ToList();
         GameObject game1 = games[0];
         GameObject game2 = games[1];
 
-        // Ajusta as cameras para a posição dos games escolhidos
+        // Ajusta as cameras para a posiï¿½ï¿½o dos games escolhidos
         game1Camera.transform.position = game1.transform.position;
         game2Camera.transform.position = game2.transform.position;
 
@@ -94,7 +132,7 @@ public class GameController : MonoBehaviour
             if (t.name == "Spws")
             {
                 if (t.childCount < zones.Count)
-                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessários");
+                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessï¿½rios");
 
                 for (int i = 0; i < zones.Count; i++)
                     zones[i].mainSpawn = t.GetChild(i);
@@ -107,7 +145,7 @@ public class GameController : MonoBehaviour
             if (t.name == "Spws")
             {
                 if (t.childCount < zones.Count)
-                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessários");
+                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessï¿½rios");
 
                 for (int i = 0; i < zones.Count; i++)
                     zones[i].copySpawn = t.GetChild(i);
@@ -116,7 +154,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        // Zera pontuações
+        // Zera pontuaï¿½ï¿½es
         for (int i = 0; i < points.Count; i++)
             points[i] = 0;
 
@@ -155,7 +193,7 @@ public class GameController : MonoBehaviour
 
         // TODO: Remover moedas spawnadas e outros elementos de jogo que devem resetar
 
-        // TODO: Tela de vitória?
+        // TODO: Tela de vitï¿½ria?
 
         // TODO: Esconder/Mostrar canvas?
 
