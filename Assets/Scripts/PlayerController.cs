@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip CoinClip;
     private AudioSource audioSource;
 
+    [Header("Other")]
+    public GameObject endCanvas;
+
     [HideInInspector]
     public string playerName;
     [HideInInspector]
@@ -168,6 +171,12 @@ public class PlayerController : MonoBehaviour
         }
 
         isReady = false;
+    }
+
+    public void OnStart(InputAction.CallbackContext context)
+    {
+        if (context.started && endCanvas.activeSelf)
+            endCanvas.SetActive(false);
     }
 
     public void OnJump(InputAction.CallbackContext context)

@@ -77,9 +77,6 @@ public class GameController : MonoBehaviour
                 EndGame();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && endCanvas.active)
-            endCanvas.SetActive(false);
     }
 
     void DisplayTime(float timeToDisplay)
