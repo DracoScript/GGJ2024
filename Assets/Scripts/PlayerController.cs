@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class PlayerController : MonoBehaviour
     [Header("Active")]
     public bool isActive = true;
     public bool isReady = false;
+
+    [Header("SwordCollider")]
+    public GameObject sword;
+    public float knockbackForce = 1.0f;
+    private float initialPos = 0.5f;
+    private bool attackAllow = true;
+    private bool gettingHit = false;
 
     [HideInInspector]
     public string playerName;
@@ -39,7 +47,12 @@ public class PlayerController : MonoBehaviour
     {
         // Apply walk
         if (isActive && !isReady)
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+        {
+            if (!gettingHit)
+            { 
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            }
+        }
 
     }
 
@@ -47,39 +60,46 @@ public class PlayerController : MonoBehaviour
     {
         if (isActive && !isReady)
         {
-            animator.SetBool("isSleeping", false);
-            rb.gravityScale = 1;
-
-            // Walk right
-            if (horizontal > 0)
+            if (!gettingHit)
             {
-                speed += accel;
-                if (speed > maxSpeed)
-                    speed = maxSpeed;
+                animator.SetBool("isSleeping", false);
+                rb.gravityScale = 1;
 
-                if (sprite)
-                    sprite.flipX = false;
+                // Walk right
+                if (horizontal > 0)
+                {
+                    speed += accel;
+                    if (speed > maxSpeed)
+                        speed = maxSpeed;
 
-                animator.SetBool("isWalking", true);
-            }
-            // Walk left
-            else if (horizontal < 0)
-            {
-                speed -= accel;
-                if (speed < -maxSpeed)
-                    speed = -maxSpeed;
+                    if (sprite)
+                        sprite.flipX = false;
 
-                if (sprite)
-                    sprite.flipX = true;
+                    sword.transform.localPosition = new Vector2(initialPos, sword.transform.localPosition.y);
 
-                animator.SetBool("isWalking", true);
-            }
-            // Walk stop
-            else
-            {
-                speed = 0;
+                    animator.SetBool("isWalking", true);
+                }
+                // Walk left
+                else if (horizontal < 0)
+                {
+                    speed -= accel;
+                    if (speed < -maxSpeed)
+                        speed = -maxSpeed;
 
-                animator.SetBool("isWalking", false);
+                    if (sprite)
+                        sprite.flipX = true;
+
+                    sword.transform.localPosition = new Vector2(initialPos * -1, sword.transform.localPosition.y);
+
+                    animator.SetBool("isWalking", true);
+                }
+                // Walk stop
+                else
+                {
+                    speed = 0;
+
+                    animator.SetBool("isWalking", false);
+                }
             }
         }
         else
@@ -121,8 +141,11 @@ public class PlayerController : MonoBehaviour
         {
             if (isReady)
                 ClearReady();
-            else if (isActive)
+            else if (isActive && attackAllow && !gettingHit)
+            {
                 animator.SetTrigger("Attack");
+                StartCoroutine(TimeAttack());
+            }
         }
     }
 
@@ -169,5 +192,35 @@ public class PlayerController : MonoBehaviour
         onFloor = true;
 
         animator.SetBool("isJumping", !onFloor);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject != sword && collision.transform.CompareTag("Attack"))
+        {
+            float direction = transform.position.x - collision.transform.position.x;
+            StartCoroutine(DelayStun(direction));
+        }
+    }
+
+    IEnumerator DelayStun(float direction)
+    {
+        gettingHit = true;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(new Vector2(direction, 0.3f) * knockbackForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.6f);
+        gettingHit = false;
+    }
+
+    IEnumerator TimeAttack()
+    {
+        sword.SetActive(true);
+        attackAllow = false;
+        yield return new WaitForSeconds(0.01f);
+        sword.transform.Translate(Vector3.forward * 0.01f);
+        yield return new WaitForSeconds(0.3f);
+        sword.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
+        attackAllow = true;
     }
 }
