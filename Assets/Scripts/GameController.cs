@@ -254,12 +254,12 @@ public class GameController : MonoBehaviour
         if (game1.TryGetComponent(out CoinsSpawner spawner1))
         {
             spawner1.ClearCoins();
-            spawner1.enabled = true;
+            spawner1.enabled = false;
         }
         if (game2.TryGetComponent(out CoinsSpawner spawner2))
         {
             spawner2.ClearCoins();
-            spawner2.enabled = true;
+            spawner2.enabled = false;
         }
 
         // Movendo os players para o Lobby

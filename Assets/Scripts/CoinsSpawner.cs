@@ -29,7 +29,7 @@ public class CoinsSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
+            yield return new WaitForSeconds(Random.Range(2.0f, 4.0f));
 
             while (coins.Count < spots.Count)
             {
