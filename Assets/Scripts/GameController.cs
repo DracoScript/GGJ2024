@@ -246,7 +246,7 @@ public class GameController : MonoBehaviour
             results.Add(points[i], mainPlayers[i]);
         }
 
-        results.OrderBy(item => item.Key);
+        results = results.OrderBy(item => item.Key).ToDictionary(item => item.Key, item => item.Value);
 
         for (int i = points.Count - 1; i >= 0; i--)
         {
