@@ -3,18 +3,23 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Lobby Spawns")]
     public Transform mainSpawn;
     public Transform copySpawn;
 
-    [Header("Camera")]
+    [Header("Cameras")]
     public GameObject lobbyCamera;
     public GameObject game1Camera;
     public GameObject game2Camera;
 
-    [Header("Player")]
+    [Header("Players")]
     public List<int> points = new();
     public List<GameObject> mainPlayers = new();
     public List<GameObject> copyPlayers = new();
+
+    [Header("Other Configs")]
+    public List<GameObject> games;
+    public List<PlayerReadyZone> zones;
 
     // Singleton
     public static GameController Instance { get; private set; }
@@ -71,9 +76,48 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        if (games.Count < 2)
+            Debug.LogError("Precisa configurar pelo menos 2 games no GameController.");
+
+        // Random Games - TODO: fazer ser random mesmo
+        GameObject game1 = games[0];
+        GameObject game2 = games[1];
+
+        // TODO: Ajustar as cameras corretas para cada game
+
+        // Arruma os spawns
+        foreach (Transform t in game1.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Spws")
+            {
+                if (t.childCount < zones.Count)
+                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessários");
+
+                for (int i = 0; i < zones.Count; i++)
+                    zones[i].mainSpawn = t.GetChild(i);
+
+                break;
+            }
+        }
+        foreach (Transform t in game2.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Spws")
+            {
+                if (t.childCount < zones.Count)
+                    Debug.LogError(t.name + " tem menos spawners configurados do que os " + zones.Count + " necessários");
+
+                for (int i = 0; i < zones.Count; i++)
+                    zones[i].copySpawn = t.GetChild(i);
+
+                break;
+            }
+        }
+
+        // Zera pontuações
         for (int i = 0; i < points.Count; i++)
             points[i] = 0;
 
+        // Movimenta os jogadores
         for (int i = 0; i < mainPlayers.Count; i++)
         {
             if (mainPlayers[i].TryGetComponent(out PlayerController controller) && controller.zone != null)
