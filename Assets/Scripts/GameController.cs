@@ -41,6 +41,7 @@ public class GameController : MonoBehaviour
     private bool timerIsRunning = false;
     private GameObject game1;
     private GameObject game2;
+    private List<GameObject> resultList = new();
 
     private bool tutorialool = false;
 
@@ -269,6 +270,7 @@ public class GameController : MonoBehaviour
                 result.transform.SetParent(gridWinner.transform);
             else
                 result.transform.SetParent(gridLosers.transform);
+            resultList.Add(result);
         }
 
         foreach ((int point, GameObject player) in results)
@@ -301,14 +303,11 @@ public class GameController : MonoBehaviour
         if (endCanvas.activeSelf)
         {
             // Destroy resultados
-            for (int i = gridWinner.transform.childCount - 1; i >= 0; i--)
+            foreach (GameObject r in resultList)
             {
-                DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
+                Destroy(r, 1);
             }
-            for (int i = gridLosers.transform.childCount - 1; i >= 0; i--)
-            {
-                DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
-            }
+            resultList = new();
 
             endCanvas.SetActive(false);
             tutorialText.SetActive(true);
