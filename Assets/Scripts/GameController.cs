@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     public List<PlayerReadyZone> zones;
 
     [Header("Time")]
+    public GameObject timerObject;
     public TMP_Text timeTxt;
     public float gameTime = 120;
 
@@ -44,6 +45,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         endCanvas.SetActive(false);
+        timerObject.SetActive(false);
 
         if (Instance != null && Instance != this)
             Destroy(gameObject);
@@ -130,6 +132,7 @@ public class GameController : MonoBehaviour
         if (games.Count < 2)
             Debug.LogError("Precisa configurar pelo menos 2 games no GameController.");
 
+        timerObject.SetActive(true);
         timerIsRunning = true;
 
         // Random Games
@@ -222,6 +225,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        timerObject.SetActive(false);
+
         // Mostrar resultados
         ShowResults();
 
@@ -252,9 +257,9 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1);
             GameObject result = CreateResult(results.ElementAt(i).Key, results.ElementAt(i).Value);
             if (i >= points.Count - 1)
-                result.transform.parent = gridWinner.transform;
+                result.transform.SetParent(gridWinner.transform);
             else
-                result.transform.parent = gridLosers.transform;
+                result.transform.SetParent(gridLosers.transform);
         }
 
         foreach ((int point, GameObject player) in results)
@@ -283,16 +288,16 @@ public class GameController : MonoBehaviour
 
     public void CloseEndCanvas()
     {
-        endCanvas.SetActive(false);
-
         // Destroy resultados
         for (int i = gridWinner.transform.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(gridWinner.transform.GetChild(i));
+            DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
         }
         for (int i = gridLosers.transform.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(gridWinner.transform.GetChild(i));
+            DestroyImmediate(gridWinner.transform.GetChild(i).gameObject);
         }
+
+        endCanvas.SetActive(false);
     }
 }
