@@ -132,6 +132,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        // TODO: Esconder/Mostrar canvas?
+
         game1Camera.SetActive(true);
         game2Camera.SetActive(true);
         lobbyCamera.SetActive(false);
@@ -139,6 +141,7 @@ public class GameController : MonoBehaviour
 
     public void EndGame()
     {
+        // Movendo os players para o Lobby
         for (int i = 0; i < mainPlayers.Count; i++)
         {
             mainPlayers[i].transform.position = mainSpawn.position;
@@ -149,6 +152,12 @@ public class GameController : MonoBehaviour
                 controller.ClearReady(true);
             }
         }
+
+        // TODO: Remover moedas spawnadas e outros elementos de jogo que devem resetar
+
+        // TODO: Tela de vitória?
+
+        // TODO: Esconder/Mostrar canvas?
 
         lobbyCamera.SetActive(true);
         game1Camera.SetActive(false);
