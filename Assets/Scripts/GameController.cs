@@ -82,6 +82,9 @@ public class GameController : MonoBehaviour
                 EndGame();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
     }
 
     void DisplayTime(float timeToDisplay)
@@ -294,7 +297,7 @@ public class GameController : MonoBehaviour
 
     public void CloseEndCanvas()
     {
-        
+
         if (endCanvas.activeSelf)
         {
             // Destroy resultados
