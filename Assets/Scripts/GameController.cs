@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public Transform[] pos1, pos2;
+    public Transform mainSpawn;
+    public Transform copySpawn;
 
+    [Header("Camera")]
+    public GameObject lobbyCamera;
+    public GameObject game1Camera;
+    public GameObject game2Camera;
+
+    [Header("Player")]
     public List<int> points = new();
     public List<GameObject> mainPlayers = new();
     public List<GameObject> copyPlayers = new();
@@ -23,36 +30,37 @@ public class GameController : MonoBehaviour
 
     public void NewPlayer(string playerName, GameObject player)
     {
-        if (playerName == "main")
-        {
-            mainPlayers.Add(player);
-            if (mainPlayers.Count < 4)
-                player.transform.position = pos1[mainPlayers.Count - 1].position;
-            else
-                Debug.LogWarning("Limit de 4 player atingido!");
+        if (playerName != "main")
+            return;
 
-            if (player.TryGetComponent(out PlayerController controller))
-                controller.id = mainPlayers.Count - 1;
-
-            points.Add(0);
-        }
+        // Main
+        mainPlayers.Add(player);
+        if (mainPlayers.Count < 4)
+            player.transform.position = mainSpawn.position;
         else
-        {
-            copyPlayers.Add(player);
-            if (copyPlayers.Count < 4)
-                player.transform.position = pos2[copyPlayers.Count - 1].position;
+            Debug.LogWarning("Limit de 4 player atingido!");
 
-            if (player.TryGetComponent(out PlayerController controller))
-                controller.id = copyPlayers.Count - 1;
-        }
+        if (player.TryGetComponent(out PlayerController mainController))
+            mainController.id = mainPlayers.Count - 1;
+
+        points.Add(0);
+
+        // Copy
+        GameObject copy = player.transform.parent.GetChild(1).gameObject;
+        copyPlayers.Add(copy);
+        if (copyPlayers.Count < 4)
+            copy.transform.position = copySpawn.position;
+
+        if (copy.TryGetComponent(out PlayerController copyController))
+            copyController.id = copyPlayers.Count - 1;
     }
 
     public void CheckReady()
     {
         foreach (GameObject player in mainPlayers)
         {
-            if (!player.GetComponent<PlayerController>()?.isReady ?? false)
-                return; // Someone is not ready
+            if (player.TryGetComponent(out PlayerController controller) && !controller.isReady)
+                return; // This player is not ready
         }
 
         StartGame();
@@ -63,6 +71,37 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < points.Count; i++)
             points[i] = 0;
 
-        // TODO: Ajustar a posição do player com stat.Object.transform 
+        for (int i = 0; i < mainPlayers.Count; i++)
+        {
+            if (mainPlayers[i].TryGetComponent(out PlayerController controller) && controller.zone != null)
+            {
+                mainPlayers[i].transform.position = controller.zone.mainSpawn.position;
+                copyPlayers[i].transform.position = controller.zone.copySpawn.position;
+
+                controller.ClearReady();
+            }
+        }
+
+        game1Camera.SetActive(true);
+        game2Camera.SetActive(true);
+        lobbyCamera.SetActive(false);
+    }
+
+    public void EndGame()
+    {
+        for (int i = 0; i < mainPlayers.Count; i++)
+        {
+            mainPlayers[i].transform.position = mainSpawn.position;
+            copyPlayers[i].transform.position = copySpawn.position;
+
+            if (mainPlayers[i].TryGetComponent(out PlayerController controller))
+            {
+                controller.ClearReady(true);
+            }
+        }
+
+        lobbyCamera.SetActive(true);
+        game1Camera.SetActive(false);
+        game2Camera.SetActive(false);
     }
 }

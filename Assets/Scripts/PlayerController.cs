@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public string playerName;
     [HideInInspector]
     public int id = -1;
+    [HideInInspector]
+    public PlayerReadyZone zone;
 
     private Animator animator;
     private SpriteRenderer sprite;
@@ -32,12 +33,15 @@ public class PlayerController : MonoBehaviour
     private float horizontal = 0;
     private float speed = 0;
     private bool onFloor = false;
+    private Color originalSpriteColor;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+
+        originalSpriteColor = sprite.color;
 
         if (GameController.Instance != null)
             GameController.Instance.NewPlayer(playerName, gameObject);
@@ -49,7 +53,7 @@ public class PlayerController : MonoBehaviour
         if (isActive && !isReady)
         {
             if (!gettingHit)
-            { 
+            {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
             }
         }
@@ -112,19 +116,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetReady()
+    public void SetReady(PlayerReadyZone z)
     {
+        zone = z;
+        sprite.color = z.playerColor;
+        transform.parent.GetComponent<PairController>()?.CopySpriteColor();
+
         isReady = true;
         rb.velocity *= 0;
     }
 
-    public void ClearReady()
+    public void ClearReady(bool clearColor = false)
     {
+        if (clearColor)
+        {
+            sprite.color = originalSpriteColor;
+            transform.parent.GetComponent<PairController>()?.CopySpriteColor();
+        }
+
         isReady = false;
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (context.started && isActive && isReady)
+            ClearReady(true);
+
         if (onFloor && context.performed && isActive && !isReady)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -137,15 +154,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && isActive && isReady)
+            ClearReady(true);
+
+        if (context.started && isActive && !isReady && attackAllow && !gettingHit)
         {
-            if (isReady)
-                ClearReady();
-            else if (isActive && attackAllow && !gettingHit)
-            {
-                animator.SetTrigger("Attack");
-                StartCoroutine(TimeAttack());
-            }
+            animator.SetTrigger("Attack");
+            StartCoroutine(TimeAttack());
         }
     }
 
@@ -156,7 +171,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(transform.parent.name + " has disconnected");
 
         if (isReady)
-            ClearReady();
+            ClearReady(true);
     }
 
     public void OnReconnect()

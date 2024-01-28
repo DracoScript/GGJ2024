@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,5 +29,13 @@ public class PairController : MonoBehaviour
             rightPlayerController.isActive = !rightPlayerController.isActive;
             onControll = context.ReadValue<float>();
         }
+    }
+
+    public void CopySpriteColor()
+    {
+        SpriteRenderer leftSprite = leftPlayer.GetComponent<SpriteRenderer>();
+        SpriteRenderer rightSprite = rightPlayer.GetComponent<SpriteRenderer>();
+
+        rightSprite.color = leftSprite.color;
     }
 }
