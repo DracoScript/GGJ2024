@@ -214,11 +214,11 @@ public class GameController : MonoBehaviour
 
         results.OrderBy(item => item.Key);
 
-        for (int i = 0; i < points.Count; i++)
+        for (int i = points.Count - 1; i >= 0; i--)
         {
             yield return new WaitForSeconds(1);
             GameObject result = CreateResult(results.ElementAt(i).Key, results.ElementAt(i).Value);
-            if (i >= points.Count - 1)
+            if (i <= 0)
                 result.transform.parent = gridWinner.transform;
             else
                 result.transform.parent = gridLosers.transform;
