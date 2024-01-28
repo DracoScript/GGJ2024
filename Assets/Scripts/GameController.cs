@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -61,8 +62,8 @@ public class GameController : MonoBehaviour
 
     public void CheckReady()
     {
-        //if (mainPlayers.Count < 2)
-        //    return;
+        if (mainPlayers.Count < 2)
+            return;
 
         foreach (GameObject player in mainPlayers)
         {
@@ -78,7 +79,8 @@ public class GameController : MonoBehaviour
         if (games.Count < 2)
             Debug.LogError("Precisa configurar pelo menos 2 games no GameController.");
 
-        // Random Games - TODO: fazer ser random mesmo
+        // Random Games
+        games = games.OrderBy(item => Random.value).ToList();
         GameObject game1 = games[0];
         GameObject game2 = games[1];
 
