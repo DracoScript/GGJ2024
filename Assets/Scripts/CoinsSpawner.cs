@@ -36,10 +36,9 @@ public class CoinsSpawner : MonoBehaviour
                 // Procura uma posição não usada
                 bool found = true;
                 Vector3 pos = spots[Random.Range(0, spots.Count)].position;
-                RemovingDeletedCoins();
                 foreach (GameObject coin in coins)
                 {
-                    if (pos == coin.transform.position)
+                    if (coin != null && pos == coin.transform.position)
                     {
                         found = false;
                         break;
@@ -67,6 +66,7 @@ public class CoinsSpawner : MonoBehaviour
                 RemovingDeletedCoins();
             }
         }
+        Debug.Log("Encerrando spawn de moedas!");
     }
 
     private void RemovingDeletedCoins()
