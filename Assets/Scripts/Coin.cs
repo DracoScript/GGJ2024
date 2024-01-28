@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            GameController.Instance.points[collision.gameObject.GetComponentInParent<PlayerController>().id] += 10;
+            GameController.Instance.points[collision.gameObject.GetComponentInParent<PlayerController>().id] += 20;
             Destroy(this.gameObject);
         }
     }

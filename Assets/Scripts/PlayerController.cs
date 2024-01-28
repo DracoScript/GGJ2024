@@ -250,11 +250,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject != sword && collision.transform.CompareTag("Attack"))
         {
             float direction = transform.position.x - collision.transform.position.x;
-            StartCoroutine(DelayStun(direction));
+            StartCoroutine(DelayStun(direction, collision.gameObject.transform.parent.gameObject));
         }
     }
 
-    IEnumerator DelayStun(float direction)
+    IEnumerator DelayStun(float direction, GameObject player)
     {
         gettingHit = true;
         rb.velocity = Vector2.zero;
@@ -269,6 +269,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(direction / 3f, 0.3f) * knockbackForce, ForceMode2D.Impulse);
             this.gameObject.GetComponentInParent<PairController>().ChangeGame();
+
+            GameController.Instance.points[player.GetComponent<PlayerController>().id] += 5;
         }
         else
         {
