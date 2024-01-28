@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -19,6 +20,12 @@ public class GameController : MonoBehaviour
     public List<GameObject> mainPlayers = new();
     public List<GameObject> copyPlayers = new();
 
+    [Header("EndGame")]
+    public GameObject endCanvas;
+    public GameObject gridWinner;
+    public GameObject gridLosers;
+    public GameObject resultPrefab;
+
     [Header("Other Configs")]
     public List<GameObject> games;
     public List<PlayerReadyZone> zones;
@@ -36,6 +43,8 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     private void Awake()
     {
+        endCanvas.SetActive(false);
+
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
@@ -105,8 +114,8 @@ public class GameController : MonoBehaviour
 
     public void CheckReady()
     {
-        //if (mainPlayers.Count < 2)
-        //    return;
+        if (mainPlayers.Count < 2)
+            return;
 
         foreach (GameObject player in mainPlayers)
         {
@@ -183,11 +192,60 @@ public class GameController : MonoBehaviour
         if (game2.TryGetComponent(out CoinsSpawner spawner2))
             spawner2.enabled = true;
 
-        // TODO: Esconder/Mostrar canvas?
-
         game1Camera.SetActive(true);
         game2Camera.SetActive(true);
         lobbyCamera.SetActive(false);
+    }
+
+    public void ShowResults()
+    {
+        endCanvas.SetActive(true);
+        StartCoroutine("ShowResultsStepByStep");
+    }
+
+    public IEnumerator ShowResultsStepByStep()
+    {
+        // Check winner
+        Dictionary<int, GameObject> results = new Dictionary<int, GameObject>();
+        for (int i = 0; i < points.Count; i++)
+        {
+            results.Add(points[i], mainPlayers[i]);
+        }
+
+        results.OrderBy(item => item.Key);
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            yield return new WaitForSeconds(1);
+            GameObject result = CreateResult(results.ElementAt(i).Key, results.ElementAt(i).Value);
+            if (i >= points.Count - 1)
+                result.transform.parent = gridWinner.transform;
+            else
+                result.transform.parent = gridLosers.transform;
+        }
+
+        foreach ((int point, GameObject player) in results)
+        {
+            yield return new WaitForSeconds(1);
+            CreateResult(point, player);
+        }
+    }
+
+    private GameObject CreateResult(int point, GameObject player)
+    {
+        GameObject result = Instantiate(resultPrefab);
+
+        // Cor
+        if (player.TryGetComponent(out PlayerController controller) && controller.zone != null)
+            result.GetComponentInChildren<CanvasRenderer>().SetColor(controller.zone.playerColor);
+
+        // Player
+        result.transform.GetChild(0).GetComponent<TMP_Text>().text = "Player";
+
+        // Points
+        result.transform.GetChild(1).GetComponent<TMP_Text>().text = point + "p";
+
+        return result;
     }
 
     public void EndGame()
@@ -216,11 +274,8 @@ public class GameController : MonoBehaviour
             }
         }
 
-        // TODO: Remover moedas spawnadas e outros elementos de jogo que devem resetar
-
-        // TODO: Tela de vit�ria?
-
-        // TODO: Esconder/Mostrar canvas?
+        // Mostrar resultados
+        ShowResults();
 
         lobbyCamera.SetActive(true);
         game1Camera.SetActive(false);
