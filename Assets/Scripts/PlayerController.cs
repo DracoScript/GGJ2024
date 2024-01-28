@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector2(direction, 1f) * (knockbackForce / 5f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(direction, 1f) * (knockbackForce / 10f), ForceMode2D.Impulse);
         }
 
         yield return new WaitForSeconds(0.7f);

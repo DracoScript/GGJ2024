@@ -1,8 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PairController : MonoBehaviour
 {
+    public float delayChange;
+    private bool onChange;
     private GameObject leftPlayer;
     private GameObject rightPlayer;
     private PlayerController leftPlayerController;
@@ -23,11 +26,12 @@ public class PairController : MonoBehaviour
 
     public void OnChangeGame(InputAction.CallbackContext context)
     {
-        if (context.ReadValue<float>() != 0 && context.ReadValue<float>() != onControll)
+        if (context.ReadValue<float>() != 0 && context.ReadValue<float>() != onControll && !onChange)
         {
             leftPlayerController.isActive = !leftPlayerController.isActive;
             rightPlayerController.isActive = !rightPlayerController.isActive;
             onControll = context.ReadValue<float>();
+            StartCoroutine(DelayChange());
         }
     }
 
@@ -43,5 +47,12 @@ public class PairController : MonoBehaviour
         leftPlayerController.isActive = !leftPlayerController.isActive;
         rightPlayerController.isActive = !rightPlayerController.isActive;
         onControll = onControll * -1;
+    }
+
+    IEnumerator DelayChange()
+    {
+        onChange = true;
+        yield return new WaitForSeconds(delayChange);
+        onChange = false;
     }
 }
