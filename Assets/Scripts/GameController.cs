@@ -82,7 +82,9 @@ public class GameController : MonoBehaviour
         GameObject game1 = games[0];
         GameObject game2 = games[1];
 
-        // TODO: Ajustar as cameras corretas para cada game
+        // Ajusta as cameras para a posição dos games escolhidos
+        game1Camera.transform.position = game1.transform.position;
+        game2Camera.transform.position = game2.transform.position;
 
         // Arruma os spawns
         foreach (Transform t in game1.GetComponentsInChildren<Transform>())

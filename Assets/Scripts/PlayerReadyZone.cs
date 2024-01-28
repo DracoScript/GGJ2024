@@ -13,9 +13,9 @@ public class PlayerReadyZone : MonoBehaviour
         if (detected != null && detected.TryGetComponent(out PlayerController detectedController) && detectedController.isReady)
             return;
 
-        if (collision.TryGetComponent(out PlayerController playerController) && playerController.playerName == "main")
+        if (collision.transform.parent.TryGetComponent(out PlayerController playerController) && playerController.playerName == "main")
         {
-            detected = collision.gameObject;
+            detected = collision.transform.parent.gameObject;
             playerController.SetReady(this);
         }
     }
