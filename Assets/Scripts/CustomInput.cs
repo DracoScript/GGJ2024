@@ -134,7 +134,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""028b15a2-e7dd-4c5c-b6dd-a3ba020af7eb"",
-                    ""path"": ""<Joystick>/stick"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/stick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -209,7 +209,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""1D Axis"",
+                    ""name"": ""Controle normal"",
                     ""id"": ""4649a159-cb63-4308-bab9-d97a8dce2384"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -242,7 +242,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
+                    ""name"": ""Teclado"",
                     ""id"": ""bb5fdd1f-4559-4a30-81ef-9865874aea80"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -275,7 +275,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
+                    ""name"": ""L1 R1"",
                     ""id"": ""96b074be-bf4f-468d-9868-eee56426a691"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -300,6 +300,39 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""name"": ""positive"",
                     ""id"": ""32caed77-b2a6-4e8f-bbf5-866d3a5ac282"",
                     ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Controle Puc"",
+                    ""id"": ""bf35bad1-7cb2-4191-9e3c-ab7d2eaca296"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f9332e41-d451-47b6-8b9e-b223c1178dd5"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4f7c4f22-8bff-45ab-bbeb-c8c218c57c93"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button6"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
