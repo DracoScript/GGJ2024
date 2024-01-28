@@ -66,7 +66,6 @@ public class CoinsSpawner : MonoBehaviour
                 RemovingDeletedCoins();
             }
         }
-        Debug.Log("Encerrando spawn de moedas!");
     }
 
     private void RemovingDeletedCoins()
