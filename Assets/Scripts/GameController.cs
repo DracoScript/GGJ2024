@@ -73,7 +73,6 @@ public class GameController : MonoBehaviour
                 timeRemaining = gameTime;
                 DisplayTime(timeRemaining);
                 timerIsRunning = false;
-                Debug.Log("Time has run out!");
                 EndGame();
             }
         }
