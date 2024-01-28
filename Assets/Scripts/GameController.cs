@@ -40,10 +40,10 @@ public class GameController : MonoBehaviour
 
         // Main
         mainPlayers.Add(player);
-        if (mainPlayers.Count < 5)
-            player.transform.position = mainSpawn.position;
-        else
-            Debug.LogWarning("Limit de 4 player atingido!");
+        player.transform.position = mainSpawn.position;
+
+        if (mainPlayers.Count > 4)
+            Debug.LogWarning("Limit de 4 player excedido!");
 
         if (player.TryGetComponent(out PlayerController mainController))
             mainController.id = mainPlayers.Count - 1;
@@ -53,8 +53,7 @@ public class GameController : MonoBehaviour
         // Copy
         GameObject copy = player.transform.parent.GetChild(1).gameObject;
         copyPlayers.Add(copy);
-        if (copyPlayers.Count < 5)
-            copy.transform.position = copySpawn.position;
+        copy.transform.position = copySpawn.position;
 
         if (copy.TryGetComponent(out PlayerController copyController))
             copyController.id = copyPlayers.Count - 1;
@@ -62,8 +61,8 @@ public class GameController : MonoBehaviour
 
     public void CheckReady()
     {
-        if (mainPlayers.Count < 2)
-            return;
+        //if (mainPlayers.Count < 2)
+        //    return;
 
         foreach (GameObject player in mainPlayers)
         {

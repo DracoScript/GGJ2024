@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(rb.velocity != Vector2.zero && speed != 0) {
+            if (rb.velocity != Vector2.zero && speed != 0)
+            {
                 if (rb.velocity.x > 0)
                 {
                     rb.velocity = new Vector2(Mathf.Max(0, rb.velocity.x - deceleration), rb.velocity.y);
@@ -122,10 +123,11 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = new Vector2(Mathf.Min(0, rb.velocity.x + deceleration), rb.velocity.y);
                 }
             }
-            else {
+            else
+            {
                 speed = 0;
 
-                if(!gettingHit)
+                if (!gettingHit)
                     rb.velocity = new Vector2(speed, rb.velocity.y);
                 else
                     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
@@ -227,6 +229,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Ceiling"))
+            return;
+
         onFloor = true;
 
         animator.SetBool("isJumping", !onFloor);
@@ -246,16 +251,18 @@ public class PlayerController : MonoBehaviour
         gettingHit = true;
         rb.velocity = Vector2.zero;
 
-        if(direction >= 0f)
+        if (direction >= 0f)
             direction = 1f;
         else
             direction = -1f;
 
-        if(isActive) {
+        if (isActive)
+        {
             rb.AddForce(new Vector2(direction / 3f, 0.3f) * knockbackForce, ForceMode2D.Impulse);
             this.gameObject.GetComponentInParent<PairController>().ChangeGame();
         }
-        else {
+        else
+        {
             rb.AddForce(new Vector2(direction, 1f) * (knockbackForce / 5f), ForceMode2D.Impulse);
         }
 
