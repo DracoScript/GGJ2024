@@ -248,11 +248,11 @@ public class GameController : MonoBehaviour
 
         results = results.OrderBy(item => item.Key).ToDictionary(item => item.Key, item => item.Value);
 
-        for (int i = points.Count - 1; i >= 0; i--)
+        for (int i = 0; i >= points.Count; i++)
         {
             yield return new WaitForSeconds(1);
             GameObject result = CreateResult(results.ElementAt(i).Key, results.ElementAt(i).Value);
-            if (i <= 0)
+            if (i >= points.Count - 1)
                 result.transform.parent = gridWinner.transform;
             else
                 result.transform.parent = gridLosers.transform;
