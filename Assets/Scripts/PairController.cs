@@ -38,4 +38,10 @@ public class PairController : MonoBehaviour
 
         rightSprite.color = leftSprite.color;
     }
+
+    public void ChangeGame() {
+        leftPlayerController.isActive = !leftPlayerController.isActive;
+        rightPlayerController.isActive = !rightPlayerController.isActive;
+        onControll = onControll * -1;
+    }
 }

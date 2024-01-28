@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool gettingHit = false;
 
     public float deceleration = 0.2f;
+    public GameObject collDefault, collSleep;
 
     [HideInInspector]
     public string playerName;
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!gettingHit)
             {
+                collDefault.SetActive(true);
+                collSleep.SetActive(false);
                 animator.SetBool("isSleeping", false);
                 rb.gravityScale = 1;
 
@@ -128,6 +131,8 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
             }
 
+            collDefault.SetActive(false);
+            collSleep.SetActive(true);
             animator.SetBool("isSleeping", true);
         }
     }
@@ -246,12 +251,15 @@ public class PlayerController : MonoBehaviour
         else
             direction = -1f;
 
-        if(isActive)
-            rb.AddForce(new Vector2(direction, 0.3f) * knockbackForce, ForceMode2D.Impulse);
-        else
-            rb.AddForce(new Vector2(direction, 0.3f) * (knockbackForce / 5f), ForceMode2D.Impulse);
+        if(isActive) {
+            rb.AddForce(new Vector2(direction / 3f, 0.3f) * knockbackForce, ForceMode2D.Impulse);
+            this.gameObject.GetComponentInParent<PairController>().ChangeGame();
+        }
+        else {
+            rb.AddForce(new Vector2(direction, 1f) * (knockbackForce / 5f), ForceMode2D.Impulse);
+        }
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         gettingHit = false;
     }
 

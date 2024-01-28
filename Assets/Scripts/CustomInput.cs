@@ -276,7 +276,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""1D Axis"",
-                    ""id"": ""861a66b0-49af-456f-ae90-92778b3a4e89"",
+                    ""id"": ""96b074be-bf4f-468d-9868-eee56426a691"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -287,8 +287,8 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""cdd3463f-480a-4a30-a71b-58bef3b551d9"",
-                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/left"",
+                    ""id"": ""277cd0ea-d7ed-4182-82c9-0e33de9560ae"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -298,8 +298,8 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""174d41b2-ddcd-4a01-9abd-535dc35159e5"",
-                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/right"",
+                    ""id"": ""32caed77-b2a6-4e8f-bbf5-866d3a5ac282"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
