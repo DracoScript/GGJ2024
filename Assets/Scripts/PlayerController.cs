@@ -175,8 +175,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnStart(InputAction.CallbackContext context)
     {
-        if (context.started && endCanvas.activeSelf)
-            endCanvas.SetActive(false);
+        if (context.started)
+            GameController.Instance.CloseEndCanvas();
     }
 
     public void OnJump(InputAction.CallbackContext context)

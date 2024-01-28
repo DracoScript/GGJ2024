@@ -281,4 +281,9 @@ public class GameController : MonoBehaviour
 
         return result;
     }
+
+    public void CloseEndCanvas()
+    {
+        endCanvas.SetActive(false);
+    }
 }
