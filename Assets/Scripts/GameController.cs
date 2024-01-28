@@ -248,7 +248,7 @@ public class GameController : MonoBehaviour
 
         results = results.OrderBy(item => item.Key).ToDictionary(item => item.Key, item => item.Value);
 
-        for (int i = 0; i >= points.Count; i++)
+        for (int i = 0; i < points.Count; i++)
         {
             yield return new WaitForSeconds(1);
             GameObject result = CreateResult(results.ElementAt(i).Key, results.ElementAt(i).Value);
