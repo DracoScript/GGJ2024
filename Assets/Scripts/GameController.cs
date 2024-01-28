@@ -197,6 +197,40 @@ public class GameController : MonoBehaviour
         lobbyCamera.SetActive(false);
     }
 
+    public void EndGame()
+    {
+        // Encerra spawn de moedas
+        if (game1.TryGetComponent(out CoinsSpawner spawner1))
+        {
+            spawner1.ClearCoins();
+            spawner1.enabled = false;
+        }
+        if (game2.TryGetComponent(out CoinsSpawner spawner2))
+        {
+            spawner2.ClearCoins();
+            spawner2.enabled = false;
+        }
+
+        // Movendo os players para o Lobby
+        for (int i = 0; i < mainPlayers.Count; i++)
+        {
+            mainPlayers[i].transform.position = mainSpawn.position;
+            copyPlayers[i].transform.position = copySpawn.position;
+
+            if (mainPlayers[i].TryGetComponent(out PlayerController controller))
+            {
+                controller.ClearReady(true);
+            }
+        }
+
+        // Mostrar resultados
+        ShowResults();
+
+        lobbyCamera.SetActive(true);
+        game1Camera.SetActive(false);
+        game2Camera.SetActive(false);
+    }
+
     public void ShowResults()
     {
         endCanvas.SetActive(true);
@@ -246,39 +280,5 @@ public class GameController : MonoBehaviour
         result.transform.GetChild(1).GetComponent<TMP_Text>().text = point + "p";
 
         return result;
-    }
-
-    public void EndGame()
-    {
-        // Encerra spawn de moedas
-        if (game1.TryGetComponent(out CoinsSpawner spawner1))
-        {
-            spawner1.ClearCoins();
-            spawner1.enabled = false;
-        }
-        if (game2.TryGetComponent(out CoinsSpawner spawner2))
-        {
-            spawner2.ClearCoins();
-            spawner2.enabled = false;
-        }
-
-        // Movendo os players para o Lobby
-        for (int i = 0; i < mainPlayers.Count; i++)
-        {
-            mainPlayers[i].transform.position = mainSpawn.position;
-            copyPlayers[i].transform.position = copySpawn.position;
-
-            if (mainPlayers[i].TryGetComponent(out PlayerController controller))
-            {
-                controller.ClearReady(true);
-            }
-        }
-
-        // Mostrar resultados
-        ShowResults();
-
-        lobbyCamera.SetActive(true);
-        game1Camera.SetActive(false);
-        game2Camera.SetActive(false);
     }
 }
