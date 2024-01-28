@@ -285,5 +285,15 @@ public class GameController : MonoBehaviour
     public void CloseEndCanvas()
     {
         endCanvas.SetActive(false);
+
+        // Destroy resultados
+        for (int i = gridWinner.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(gridWinner.transform.GetChild(i));
+        }
+        for (int i = gridLosers.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(gridWinner.transform.GetChild(i));
+        }
     }
 }
