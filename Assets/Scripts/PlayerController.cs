@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip AttackClip;
     public AudioClip JumpClip;
     public AudioClip HitClip;
+    public AudioClip CoinClip;
     private AudioSource audioSource;
 
     [HideInInspector]
@@ -251,6 +252,11 @@ public class PlayerController : MonoBehaviour
         {
             float direction = transform.position.x - collision.transform.position.x;
             StartCoroutine(DelayStun(direction, collision.gameObject.transform.parent.gameObject));
+        }
+
+        if (collision.transform.CompareTag("Coin"))
+        {
+            audioSource.PlayOneShot(CoinClip);
         }
     }
 
