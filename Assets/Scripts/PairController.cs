@@ -10,7 +10,7 @@ public class PairController : MonoBehaviour
     private GameObject rightPlayer;
     private PlayerController leftPlayerController;
     private PlayerController rightPlayerController;
-    private float onControll = -1;
+    private float onControll = 1;
 
     void Start()
     {
