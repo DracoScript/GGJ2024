@@ -57,6 +57,9 @@ public class GameController : MonoBehaviour
 
     public void CheckReady()
     {
+        if (mainPlayers.Count < 2)
+            return;
+
         foreach (GameObject player in mainPlayers)
         {
             if (player.TryGetComponent(out PlayerController controller) && !controller.isReady)

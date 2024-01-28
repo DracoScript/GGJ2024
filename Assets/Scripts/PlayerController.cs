@@ -124,6 +124,8 @@ public class PlayerController : MonoBehaviour
 
         isReady = true;
         rb.velocity *= 0;
+
+        GameController.Instance.CheckReady();
     }
 
     public void ClearReady(bool clearColor = false)
