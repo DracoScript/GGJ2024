@@ -62,6 +62,15 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""530bc76b-4bfe-4d09-b854-0c6638163da9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -339,6 +348,39 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83750c45-94b4-4f9e-95db-5cad6545b8df"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56b426a6-66bf-4a88-995e-bb5444904070"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6802e486-f732-4df3-8256-3a7a6edbfb8a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -351,6 +393,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_ChangeGame = m_Player.FindAction("ChangeGame", throwIfNotFound: true);
+        m_Player_Start = m_Player.FindAction("Start", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -416,6 +459,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_ChangeGame;
+    private readonly InputAction m_Player_Start;
     public struct PlayerActions
     {
         private @CustomInput m_Wrapper;
@@ -424,6 +468,7 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @ChangeGame => m_Wrapper.m_Player_ChangeGame;
+        public InputAction @Start => m_Wrapper.m_Player_Start;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -445,6 +490,9 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
             @ChangeGame.started += instance.OnChangeGame;
             @ChangeGame.performed += instance.OnChangeGame;
             @ChangeGame.canceled += instance.OnChangeGame;
+            @Start.started += instance.OnStart;
+            @Start.performed += instance.OnStart;
+            @Start.canceled += instance.OnStart;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -461,6 +509,9 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
             @ChangeGame.started -= instance.OnChangeGame;
             @ChangeGame.performed -= instance.OnChangeGame;
             @ChangeGame.canceled -= instance.OnChangeGame;
+            @Start.started -= instance.OnStart;
+            @Start.performed -= instance.OnStart;
+            @Start.canceled -= instance.OnStart;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -484,5 +535,6 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnChangeGame(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
     }
 }

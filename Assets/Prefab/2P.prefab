@@ -484,6 +484,7 @@ MonoBehaviour:
   JumpClip: {fileID: 8300000, guid: 1bc1f56a75d448945831c13b0b189fb8, type: 3}
   HitClip: {fileID: 8300000, guid: f7af70cd32d685e48aca8e4da411969d, type: 3}
   CoinClip: {fileID: 8300000, guid: 07d84fe275197b2488b9e4eb0967befb, type: 3}
+  endCanvas: {fileID: 0}
   playerName: main
   id: -1
   zone: {fileID: 0}
@@ -600,6 +601,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a52d0bb9-f984-45d5-b8f0-59f43affc603
     m_ActionName: Player/ChangeGame[/DualShock4GamepadHID/dpad/left,/DualShock4GamepadHID/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7860798365229974117}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 530bc76b-4bfe-4d09-b854-0c6638163da9
+    m_ActionName: Player/Start[/DragonRise Inc.   Generic   USB  Joystick  /button10,/DualShock4GamepadHID/start,/XInputControllerWindows/start,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -888,6 +905,7 @@ MonoBehaviour:
   JumpClip: {fileID: 8300000, guid: 1bc1f56a75d448945831c13b0b189fb8, type: 3}
   HitClip: {fileID: 8300000, guid: f7af70cd32d685e48aca8e4da411969d, type: 3}
   CoinClip: {fileID: 8300000, guid: 07d84fe275197b2488b9e4eb0967befb, type: 3}
+  endCanvas: {fileID: 0}
   playerName: copy
   id: -1
   zone: {fileID: 0}
@@ -980,6 +998,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a52d0bb9-f984-45d5-b8f0-59f43affc603
     m_ActionName: Player/ChangeGame[/DualShock4GamepadHID/dpad/left,/DualShock4GamepadHID/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7860798366166938380}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 530bc76b-4bfe-4d09-b854-0c6638163da9
+    m_ActionName: Player/Start[/DragonRise Inc.   Generic   USB  Joystick  /button10,/DualShock4GamepadHID/start,/XInputControllerWindows/start,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1203,6 +1237,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a52d0bb9-f984-45d5-b8f0-59f43affc603
     m_ActionName: Player/ChangeGame[/DualShock4GamepadHID/dpad/left,/DualShock4GamepadHID/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 530bc76b-4bfe-4d09-b854-0c6638163da9
+    m_ActionName: Player/Start[/DragonRise Inc.   Generic   USB  Joystick  /button10,/DualShock4GamepadHID/start,/XInputControllerWindows/start,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
