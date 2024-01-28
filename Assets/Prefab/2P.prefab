@@ -260,13 +260,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b923fc5fe0b204994173ded02955c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 5
-  maxSpeed: 5
+  accel: 3
+  maxSpeed: 3
   jumpForce: 6
   isActive: 1
   isReady: 0
   sword: {fileID: 1263264551208013502}
-  knockbackForce: 20
+  knockbackForce: 10
+  deceleration: 0.05
   playerName: main
   id: -1
   zone: {fileID: 0}
@@ -564,7 +565,8 @@ MonoBehaviour:
   isActive: 1
   isReady: 0
   sword: {fileID: 8264361776255626233}
-  knockbackForce: 20
+  knockbackForce: 10
+  deceleration: 0.05
   playerName: copy
   id: -1
   zone: {fileID: 0}

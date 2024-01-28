@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private bool attackAllow = true;
     private bool gettingHit = false;
 
+    public float deceleration = 0.2f;
+
     [HideInInspector]
     public string playerName;
     [HideInInspector]
@@ -57,7 +59,6 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(speed, rb.velocity.y);
             }
         }
-
     }
 
     void FixedUpdate()
@@ -108,9 +109,24 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = 0;
-            rb.velocity = Vector2.zero;
-            speed = 0;
+            if(rb.velocity != Vector2.zero && speed != 0) {
+                if (rb.velocity.x > 0)
+                {
+                    rb.velocity = new Vector2(Mathf.Max(0, rb.velocity.x - deceleration), rb.velocity.y);
+                }
+                else if (rb.velocity.x < 0)
+                {
+                    rb.velocity = new Vector2(Mathf.Min(0, rb.velocity.x + deceleration), rb.velocity.y);
+                }
+            }
+            else {
+                speed = 0;
+
+                if(!gettingHit)
+                    rb.velocity = new Vector2(speed, rb.velocity.y);
+                else
+                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+            }
 
             animator.SetBool("isSleeping", true);
         }
@@ -224,7 +240,17 @@ public class PlayerController : MonoBehaviour
     {
         gettingHit = true;
         rb.velocity = Vector2.zero;
-        rb.AddForce(new Vector2(direction, 0.3f) * knockbackForce, ForceMode2D.Impulse);
+
+        if(direction >= 0f)
+            direction = 1f;
+        else
+            direction = -1f;
+
+        if(isActive)
+            rb.AddForce(new Vector2(direction, 0.3f) * knockbackForce, ForceMode2D.Impulse);
+        else
+            rb.AddForce(new Vector2(direction, 0.3f) * (knockbackForce / 5f), ForceMode2D.Impulse);
+
         yield return new WaitForSeconds(0.6f);
         gettingHit = false;
     }

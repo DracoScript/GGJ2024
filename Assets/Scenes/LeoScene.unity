@@ -509,16 +509,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b898a85349714e83120b0e3b91760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos1:
-  - {fileID: 1296301339}
-  - {fileID: 1643225581}
-  - {fileID: 1645146989}
-  - {fileID: 563378503}
-  pos2:
-  - {fileID: 1237718810}
-  - {fileID: 512317679}
-  - {fileID: 2140934579}
-  - {fileID: 1632252292}
+  mainSpawn: {fileID: 1237718810}
+  copySpawn: {fileID: 1296301339}
+  lobbyCamera: {fileID: 0}
+  game1Camera: {fileID: 207928681}
+  game2Camera: {fileID: 1850940539}
   points: 
   mainPlayers: []
   copyPlayers: []
