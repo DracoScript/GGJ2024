@@ -517,6 +517,8 @@ MonoBehaviour:
   points: 
   mainPlayers: []
   copyPlayers: []
+  games: []
+  zones: []
 --- !u!1 &305029136
 GameObject:
   m_ObjectHideFlags: 0
@@ -13150,7 +13152,7 @@ GameObject:
   - component: {fileID: 1302813008}
   m_Layer: 0
   m_Name: Cell
-  m_TagString: Untagged
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14478,7 +14480,7 @@ GameObject:
   - component: {fileID: 1773464558}
   m_Layer: 0
   m_Name: Cell
-  m_TagString: Untagged
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
