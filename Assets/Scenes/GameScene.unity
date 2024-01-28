@@ -3027,7 +3027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &293381904
 Transform:
   m_ObjectHideFlags: 0
@@ -5567,7 +5567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &634665806
 Transform:
   m_ObjectHideFlags: 0
@@ -9819,7 +9819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &750071843
 Transform:
   m_ObjectHideFlags: 0
@@ -13454,7 +13454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &965597635
 Transform:
   m_ObjectHideFlags: 0
@@ -13480,6 +13480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 980396566}
+  - component: {fileID: 980396567}
   m_Layer: 0
   m_Name: Game_Terrain
   m_TagString: Untagged
@@ -13507,6 +13508,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &980396567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980396565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99da3579ac5b754abc15afa6cb5ee14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &985131273
 GameObject:
   m_ObjectHideFlags: 0
@@ -22359,6 +22372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510450099}
+  - component: {fileID: 1510450100}
   m_Layer: 0
   m_Name: Game_Cave
   m_TagString: Untagged
@@ -22386,6 +22400,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1510450100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510450098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99da3579ac5b754abc15afa6cb5ee14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1532700314
 GameObject:
   m_ObjectHideFlags: 0
@@ -29815,6 +29841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1831422216}
+  - component: {fileID: 1831422217}
   m_Layer: 0
   m_Name: Game_Ice
   m_TagString: Untagged
@@ -29842,6 +29869,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831422217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831422215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99da3579ac5b754abc15afa6cb5ee14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1851749387
 GameObject:
   m_ObjectHideFlags: 0
@@ -32913,6 +32952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2069229675}
+  - component: {fileID: 2069229676}
   m_Layer: 0
   m_Name: Game_CrystalCave
   m_TagString: Untagged
@@ -32940,6 +32980,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2069229676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069229674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99da3579ac5b754abc15afa6cb5ee14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2081211660
 GameObject:
   m_ObjectHideFlags: 0
