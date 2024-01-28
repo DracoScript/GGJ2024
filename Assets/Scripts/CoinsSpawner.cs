@@ -82,6 +82,8 @@ public class CoinsSpawner : MonoBehaviour
 
     public void ClearCoins()
     {
+        StopCoroutine("TimedSpawn");
+
         foreach (GameObject coin in coins)
         {
             if (coin != null)
