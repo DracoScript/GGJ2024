@@ -47,6 +47,7 @@ public class PairController : MonoBehaviour
         leftPlayerController.isActive = !leftPlayerController.isActive;
         rightPlayerController.isActive = !rightPlayerController.isActive;
         onControll = onControll * -1;
+        StartCoroutine(DelayChange());
     }
 
     IEnumerator DelayChange()
