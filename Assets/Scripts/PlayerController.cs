@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -175,8 +176,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnStart(InputAction.CallbackContext context)
     {
-        if (context.started && playerName == "main")
+        if (context.started && playerName == "main") {
+            SceneManager.LoadScene(0);
             GameController.Instance.CloseEndCanvas();
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)

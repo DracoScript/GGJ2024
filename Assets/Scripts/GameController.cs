@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
 
         timeRemaining = gameTime;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Update()
