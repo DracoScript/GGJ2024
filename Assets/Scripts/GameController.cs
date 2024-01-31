@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -312,6 +313,7 @@ public class GameController : MonoBehaviour
             endCanvas.SetActive(false);
             tutorialText.SetActive(true);
 
+            SceneManager.LoadScene(0);
         }
         else if (lobbyCamera.activeSelf)
         {
